@@ -63,8 +63,6 @@ func (ctx *Context) HandleViewItems(w http.ResponseWriter, r *http.Request) {
 		var summaries []viewItemMarketSummary
 		for _, market := range selectableMarkets {
 			prices, ok := ctx.App.PriceDB.GetPrice(market.Name, t.ID)
-			log.Printf("[DEBUG] GetPrice: market=%s typeID=%d ok=%v prices=%+v", market.Name, t.ID, ok, prices)
-
 			if !ok {
 				// No market data
 				continue
@@ -98,6 +96,7 @@ func (ctx *Context) HandleViewItem(w http.ResponseWriter, r *http.Request) {
 		if err == nil {
 			// This looks like a type ID
 			item, ok = ctx.App.TypeDB.GetTypeByID(typeID)
+			
 			if !ok {
 				ctx.renderErrorPage(r, w, http.StatusNotFound, "Not Found", "I couldn't find what you're looking for")
 				return
@@ -124,6 +123,7 @@ func (ctx *Context) HandleViewItem(w http.ResponseWriter, r *http.Request) {
 	var summaries []viewItemMarketSummary
 	for _, market := range selectableMarkets {
 		prices, ok := ctx.App.PriceDB.GetPrice(market.Name, item.ID)
+		log.Printf("[DEBUG] GetPrice: market=%s typeID=%d ok=%v prices=%+v", market.Name, t.ID, ok, prices)
 		if !ok {
 			// No market data
 			continue
