@@ -87,6 +87,7 @@ func (ctx *Context) HandleViewItems(w http.ResponseWriter, r *http.Request) {
 
 // HandleViewItem handles /item/[id]
 func (ctx *Context) HandleViewItem(w http.ResponseWriter, r *http.Request) {
+	log.Printf("[DEBUG] Invoked")
 	var item typedb.EveType
 	var ok bool
 
@@ -123,7 +124,6 @@ func (ctx *Context) HandleViewItem(w http.ResponseWriter, r *http.Request) {
 	var summaries []viewItemMarketSummary
 	for _, market := range selectableMarkets {
 		prices, ok := ctx.App.PriceDB.GetPrice(market.Name, item.ID)
-		log.Printf("[DEBUG] GetPrice: market=%s typeID=%d ok=%v prices=%+v", market.Name, t.ID, ok, prices)
 		if !ok {
 			// No market data
 			continue
