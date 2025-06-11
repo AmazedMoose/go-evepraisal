@@ -63,6 +63,8 @@ func (ctx *Context) HandleViewItems(w http.ResponseWriter, r *http.Request) {
 		var summaries []viewItemMarketSummary
 		for _, market := range selectableMarkets {
 			prices, ok := ctx.App.PriceDB.GetPrice(market.Name, t.ID)
+			log.Printf("[DEBUG] GetPrice: market=%s typeID=%d ok=%v prices=%+v", market.Name, t.ID, ok, prices)
+
 			if !ok {
 				// No market data
 				continue
